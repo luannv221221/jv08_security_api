@@ -17,4 +17,8 @@ public class HomeController {
     public ResponseEntity<?> cart(){
         return new ResponseEntity<>("Trang giot hang",HttpStatus.OK);
     }
+    @GetMapping("/admin")
+    public ResponseEntity<?> admin(){
+        return new ResponseEntity<>("Trang Quản trị",HttpStatus.OK);
+    }
 }
