@@ -1,11 +1,10 @@
 package com.ra.service;
 
-import com.ra.model.dto.user.DataResponse;
-import com.ra.model.dto.user.LoginRequestDTO;
-import com.ra.model.dto.user.RegisterRequestDTO;
-import com.ra.model.dto.user.UserResponseDTO;
+import com.ra.model.dto.user.*;
 
 public interface AuthService {
     UserResponseDTO login(LoginRequestDTO loginRequestDTO);
     DataResponse register(RegisterRequestDTO registerRequestDTO);
+    DataResponse createAdminAccount(AccountRequestDTO accountRequestDTO);
+
 }

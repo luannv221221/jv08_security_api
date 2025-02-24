@@ -1,9 +1,6 @@
 package com.ra.service.impl;
 
-import com.ra.model.dto.user.DataResponse;
-import com.ra.model.dto.user.LoginRequestDTO;
-import com.ra.model.dto.user.RegisterRequestDTO;
-import com.ra.model.dto.user.UserResponseDTO;
+import com.ra.model.dto.user.*;
 import com.ra.model.entity.Role;
 import com.ra.model.entity.User;
 import com.ra.repository.RoleRepository;
@@ -68,4 +65,26 @@ public class AuhServiceImpl implements AuthService {
         userRepository.save(user);
         return new DataResponse(201, "Dang ku thanh cong");
     }
+
+    @Override
+    public DataResponse createAdminAccount(AccountRequestDTO accountRequestDTO) {
+        // xu ly lay ve danh sach quyen gui len tu client
+        Set<Role> roles = new HashSet<>();
+        for (String roleName: accountRequestDTO.getRoleName()) {
+            Role role = roleRepository.findRoleByRoleName(roleName);
+            roles.add(role);
+        }
+        // convert DTO=>ENTITY
+        User user = User.builder()
+                .fullName(accountRequestDTO.getFullName())
+                .username(accountRequestDTO.getUsername())
+                .passowrd(new BCryptPasswordEncoder().encode(accountRequestDTO.getPassword()))
+                .roles(roles)
+                .status(true)
+                .build();
+        userRepository.save(user);
+        return new DataResponse(201, "Tao moi thanh cong");
+    }
+
+
 }
