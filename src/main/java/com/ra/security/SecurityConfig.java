@@ -33,7 +33,7 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth->{
-                    auth.requestMatchers("/api/v1/admin/account").hasAuthority("ADMIN");
+                    auth.requestMatchers("/api/v1/admin/account/**").hasAuthority("ADMIN");
                     auth.requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN","SUB_ADMIN");
                     auth.requestMatchers("/api/v1/cart").authenticated();
                     auth.requestMatchers("/api/v1","/api/v1/auth/**","/api/v1/cart").permitAll();

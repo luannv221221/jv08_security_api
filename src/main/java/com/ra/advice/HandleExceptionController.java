@@ -1,5 +1,6 @@
 package com.ra.advice;
 
+import com.ra.exception.CustomException;
 import com.ra.model.dto.DataError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,5 +21,10 @@ public class HandleExceptionController {
                 map.put(fieldError.getField(), fieldError.getDefaultMessage())
                 );
         return new DataError<>(map,400);
+    }
+    @ExceptionHandler(CustomException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public DataError<?> handlerValidException(CustomException exception){
+        return new DataError<>(exception.getMessage(),404);
     }
 }

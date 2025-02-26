@@ -1,5 +1,6 @@
 package com.ra.service.impl;
 
+import com.ra.exception.CustomException;
 import com.ra.model.dto.user.*;
 import com.ra.model.entity.Role;
 import com.ra.model.entity.User;
@@ -84,6 +85,25 @@ public class AuhServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
         return new DataResponse(201, "Tao moi thanh cong");
+    }
+
+    @Override
+    public DataResponse editRoleAccount(EditRoleAccountDTO editRoleAccountDTO,Long idAccount) throws CustomException {
+        // tìm về đối tượng account cần cập nhật quyền
+        User user = userRepository.findById(idAccount).orElseThrow(()->new CustomException("User Not Found"));
+        Set<Role> roles = new HashSet<>();
+        for (String roleName: editRoleAccountDTO.getRoleName()) {
+            Role role = roleRepository.findRoleByRoleName(roleName);
+            if(role== null){
+                throw new CustomException("Role not found");
+            }
+            roles.add(role);
+        }
+
+        assert user != null;
+        user.setRoles(roles);
+        userRepository.save(user);
+        return new DataResponse(200, "cap nhat  thanh cong");
     }
 
 

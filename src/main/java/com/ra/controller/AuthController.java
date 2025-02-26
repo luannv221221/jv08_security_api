@@ -29,4 +29,5 @@ public class AuthController {
         DataResponse dataResponse = authService.register(registerRequestDTO);
         return new ResponseEntity<>(dataResponse,HttpStatus.CREATED);
     }
+
 }
